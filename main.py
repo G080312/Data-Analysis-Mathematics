@@ -1,11 +1,16 @@
-numbers = [1,2,3,4,5,6]
+numbers = [100,4,1,9,12,52,58,88,10,25,300,29,63,71,22,11,35,39,8,41,45,6,9]
 data = sorted(numbers)
 half = len(data) // 2
-num,count,Total,quartile1 = 0,0,0,0
-box = []
+box,outlier = [],[]
+num,count,total,quartile1 = 0,0,0,0
+
 for i in range(0,len(data)):
-  Total += data[i]
-value = Total / len(data)
+  total += data[i]
+value = round(total / len(data),1)
+
+for number in range(0,len(data)):
+  if (value * 3) <= data[number]:
+    outlier.append(data[number])
 
 if len(data) % 2 == 0:
   median = (data[half - 1] + data[half]) / 2
