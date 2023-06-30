@@ -1,10 +1,11 @@
 from npy import calc,calc2data
-data1 = [1, 2, 3, 4, 5] # or data1 = "1,2,3,4,5"
+data1 = [1,2,3,4,5] # or data1 = "1,2,3,4,5"
 data2 = [5,6,8,5,7] # or data2 = "5,6,8,5,7"
 
 data1resp = calc2data(data1)
 data2resp = calc2data(data2)
-print(f"\n分散(s²) = {data2resp['variance']}\n標準偏差 = √{data2resp['standard_deviation']}")
+print(f"分散(s²) = {data1resp['variance']}\n標準偏差 = √{data1resp['standard_deviation']}")
+print(f"分散(s²) = {data2resp['variance']}\n標準偏差 = √{data2resp['standard_deviation']}")
 print(f"Data1: 平均 = {data1resp['average']:.2f}, 分散 = {data1resp['variance']:.2f}, 標準偏差 = {data1resp['standard_deviation']:.2f}")
 print(f"Data2: 平均 = {data2resp['average']:.2f}, 分散 = {data2resp['variance']:.2f}, 標準偏差 = {data2resp['standard_deviation']:.2f}")
 result = calc(data1)
