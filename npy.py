@@ -1,15 +1,14 @@
 import time
 import math
 
-def calc(Numerical):
+def calc(data):
   start = time.time()
-  if type(Numerical) == list:data = Numerical
-  elif type(Numerical) == str:data = eval(Numerical)
-  else:data = Numerical
+  if type(data) == list:data = data
+  elif type(data) == str:data = eval(data)
   sorted_data = sorted(data)
   half = len(sorted_data) // 2
   box, Outlier = [], []
-  Sum, Record, Total, Range25per, max_count = 0, 0, 0, 0, 0
+  Sum, Record, Total, Range25per, max_count , mode_value = 0,0,0,0,0,None
   for i in range(len(sorted_data)):Total += sorted_data[i]
   Average = Total / len(sorted_data)
   for number in range(len(sorted_data)):
@@ -39,10 +38,9 @@ def calc(Numerical):
   Quartilerange = Range75per - Range25per
   Min_value, Max_value = sorted_data[0], sorted_data[len(sorted_data)-1]
   Len = len(sorted_data)
-  mode_value = None
   for d in sorted_data:
     data_count = sorted_data.count(d)
-    if data_count > max_count:max_count, mode_value = data_count, d
+    if data_count > max_count:max_count,mode_value = data_count,d
   end = time.time()
   TaskTime = end - start
   result = {
@@ -58,28 +56,33 @@ def calc(Numerical):
     'Q1': Range25per,
     'Q2': Range50per,
     'Q3': Range75per,
+    'Q': {
+      'Q1': Range25per,
+      'Q2': Range50per,
+      'Q3': Range75per
+    },
     'task_time': TaskTime
   }
   return result
 
-def calc2data(data):
+def Difference(data):
   start = time.time()
-  if type(data) == list:num_data, data_type = data,list
-  elif type(data) == str:num_data, data_type = eval(data),str
-  else:num_data, data_type = data, None
-  sorted_data, total,deviation_total = sorted(num_data),0,0
+  if type(data) == list:data, data_type = data,list
+  elif type(data) == str:data, data_type = eval(data),str
+  else:data, data_type = data, None
+  sorted_data, total,deviation_total = sorted(data),0,0
   for value in sorted_data:total += value
   average = total / len(sorted_data)
   deviation_list,output_deviation,deviation_squared_list = [],[],[]
   for value in sorted_data:
     deviation = value - average
     deviation_list.append(deviation)
-    output_deviation.append(f"({value}-{average})²")
+    output_deviation.append(f'({value}-{average})²')
     deviation_squared = deviation * deviation
     deviation_squared_list.append(deviation_squared)
     deviation_total += deviation_squared
   variance = deviation_total / len(sorted_data)
-  deviation_str = '+'.join(output_deviation).replace(".0","")
+  deviation_str = '+'.join(output_deviation).replace('.0','')
   data_len = len(sorted_data)
   standard_deviation = math.sqrt(variance)
   end = time.time()
@@ -96,8 +99,8 @@ def calc2data(data):
   return result
 
 def merge(x,y):
-  deviation1st,Quartile1st = calc2data(x),calc(x)
-  deviation2nd,Quartile2nd = calc2data(y),calc(y)
+  deviation1st,Quartile1st = Difference(x),calc(x)
+  deviation2nd,Quartile2nd = Difference(y),calc(y)
   result = {
     'deviation[1]':deviation1st,
     'Quartile[1]':Quartile1st,
@@ -107,7 +110,6 @@ def merge(x,y):
   return result
 
 def prime(start,end):
-  global primes
   number = range(start,end)
   def prime(num):
     for x in range(2,num):
