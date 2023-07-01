@@ -97,7 +97,7 @@ def calc2data(data):
 
 def merge(x,y):
   deviation1st,Quartile1st = calc2data(x),calc(x)
-  deviation2nd,Quartile2nd = calc2data(y),calc(x)
+  deviation2nd,Quartile2nd = calc2data(y),calc(y)
   result = {
     'deviation[1]':deviation1st,
     'Quartile[1]':Quartile1st,
