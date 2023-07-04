@@ -69,7 +69,6 @@ def Difference(data):
   start = time.time()
   if type(data) == list:data, data_type = data,list
   elif type(data) == str:data, data_type = eval(data),str
-  else:data, data_type = data, None
   sorted_data, total,deviation_total = sorted(data),0,0
   for value in sorted_data:total += value
   average = total / len(sorted_data)
@@ -109,17 +108,21 @@ def merge(x,y):
   }
   return result
 
-def prime(start,end):
-  number = range(start,end)
-  def prime(num):
-    for x in range(2,num):
-      if (num % x) == 0:
-        return False
+def prime_numbers(start, end):
+  start_time = time.time()
+  numbers = range(start, end + 1)
+  def is_prime(num):
+    if num <= 1: return False
+    for x in range(2, int(math.sqrt(num)) + 1):
+      if (num % x) == 0: return False
     return True
-  primes = list(filter(prime,number))
+  primes = list(filter(is_prime, numbers))
+  end_time = time.time()
+  task_time = end_time - start_time
   result = {
     'primes': primes,
     'start_num': start,
-    'end_num': end
+    'end_num': end,
+    'TaskTime': task_time
   }
   return result
