@@ -1,6 +1,5 @@
 # first-contribution
 
-<h1>first-contribution</h1>
 <p>
-Program the math..
+prime/quartile/range/deviation/standard deviation/dispersion
 </p>
