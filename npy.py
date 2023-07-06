@@ -1,8 +1,7 @@
 import math
 
 def calc(data):
-  if type(data) == list: data = data
-  elif type(data) == str:
+  if type(data) == str:
     data = data.strip('[]').split(',')
     data = [float(x) for x in data]
   sorted_data = sorted(data)
@@ -63,8 +62,9 @@ def calc(data):
   return result
 
 def Difference(data):
-  if type(data) == list:data, data_type = data,list
-  elif type(data) == str:data, data_type = eval(data),str
+  if type(data) == str:
+    data = data.strip('[]').split(',')
+    data = [float(x) for x in data]
   sorted_data, total,deviation_total = sorted(data),0,0
   for value in sorted_data:total += value
   average = total / len(sorted_data)
@@ -87,7 +87,6 @@ def Difference(data):
     'deviation_list': deviation_list,
     'standard_deviation': standard_deviation,
     'deviation_squared_list': deviation_squared_list,
-    'data_type': data_type
   }
   return result
 
