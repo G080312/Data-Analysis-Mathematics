@@ -20,17 +20,17 @@ def calc(data):
       if i == (half // 2) - 1:Sum += sorted_data[i]
       elif i == half // 2:Sum += sorted_data[i]
     Range25per = Sum / 2
-    for ℱ in range(len(sorted_data)):
-      if ℱ >= half + 1:
-        box.append(sorted_data[ℱ])
+    for j in range(len(sorted_data)):
+      if j >= half + 1:
+        box.append(sorted_data[j])
         Record += 1
     Range75per = (box[Record // 2] + box[(Record // 2) - 1]) / 2
   else:
     for i in range(half):
       if i == half // 2:Range25per += sorted_data[i]
-    for ℱ in range(len(sorted_data)):
-      if ℱ >= half:
-        box.append(sorted_data[ℱ])
+    for j in range(len(sorted_data)):
+      if j >= half:
+        box.append(sorted_data[j])
         Record += 1
     Range75per = box[Record // 2]
   Scope = sorted_data[len(sorted_data) - 1] - sorted_data[0]
@@ -42,6 +42,7 @@ def calc(data):
     if data_count > max_count:max_count,mode_value = data_count,d
   result = {
     'len': Len,
+    'Total': Total,
     'average': Average,
     'max': Max_value,
     'min': Min_value,
@@ -65,22 +66,22 @@ def Difference(data):
   if type(data) == str:
     data = data.strip('[]').split(',')
     data = [float(x) for x in data]
-  sorted_data, total,deviation_total = sorted(data),0,0
-  for value in sorted_data:total += value
-  average = total / len(sorted_data)
   deviation_list,deviation_squared_list = [],[]
+  sorted_data, total,deviation_total = sorted(data),0,0
+  data_len = len(sorted_data)
+  for value in sorted_data:total += value
+  average = total / data_len
   for value in sorted_data:
     deviation = value - average
     deviation_list.append(deviation)
-    deviation_squared = deviation * deviation
+    deviation_squared = deviation ** 2
     deviation_squared_list.append(deviation_squared)
     deviation_total += deviation_squared
-  variance = deviation_total / len(sorted_data)
-  data_len = len(sorted_data)
+  variance = deviation_total / data_len
   standard_deviation = math.sqrt(variance)
   result = {
-    'total':total,
     'sorted_data': sorted_data,
+    'total':total,
     'len': data_len,
     'average': average,
     'variance': variance,
@@ -91,24 +92,17 @@ def Difference(data):
   return result
 
 def merge(x,y):
-  deviation1st,Quartile1st = Difference(x),calc(x)
-  deviation2nd,Quartile2nd = Difference(y),calc(y)
-  List, data1list, data2list = [], [], []
-  for data1_value, data2_value in zip(deviation1st['sorted_data'],deviation2nd['sorted_data']):
-    List.append(f'({data1_value}-{deviation1st["average"]})({data2_value}-{deviation2nd["average"]})²')
-    data1list.append(f'({data1_value}-{deviation1st["average"]})²')
-    data2list.append(f'({data2_value}-{deviation2nd["average"]})²')
-  output_equation = '+'.join(List).replace('.0', '')
-  output_data1list = '+'.join(data1list).replace('.0', '')
-  output_data2list = '+'.join(data2list).replace('.0', '')
+  difference1st,Quartile1st = Difference(x),calc(x)
+  difference2nd,Quartile2nd = Difference(y),calc(y)
   result = {
-    'deviation[1]': deviation1st,
-    'deviation[2]': deviation2nd,
-    'Quartile[1]': Quartile1st,
-    'Quartile[2]': Quartile2nd,
-    'output_equation': output_equation,
-    'output_data1list': output_data1list,
-    'output_data2list': output_data2list
+    'data[1]': {
+      'Quartile': Quartile1st,
+      'deviation': difference1st,
+    },
+    'data[2]': {
+      'Quartile': Quartile2nd,
+      'deviation': difference2nd,
+    },
   }
   return result
 
