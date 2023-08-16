@@ -5,4 +5,4 @@ y = input("データ2:")
 
 data = merge(x,y)
 print(data)
-print(data["Quartile[1]"]["range"])
+print(data["Quartile1"]["range"])
